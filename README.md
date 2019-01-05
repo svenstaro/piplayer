@@ -1,7 +1,14 @@
 # piplayer
 Receive a command, play a song
 
-## How to
+## How to use
+
+`PUT` to `/play_random_song` to play a random song.
+`PUT` to `/stop_playback` to stop the current playback.
+
+## How to build
+
+Since music is baked into the binary at build time, you have to put it into a dir `music/` in the root of this repo.
 
 ### On host
 
