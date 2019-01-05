@@ -58,6 +58,15 @@ fn stop_playback(req: &HttpRequest<AppState>) -> String {
     "Stopped playback".to_string()
 }
 
+fn status(req: &HttpRequest<AppState>) -> String {
+    let sink = &req.state().sink;
+    if sink.lock().unwrap().empty() {
+        "paused".to_string()
+    } else {
+        "playing".to_string()
+    }
+}
+
 fn main() {
     std::env::set_var("RUST_LOG", "actix_web=info");
     pretty_env_logger::init();
@@ -74,8 +83,9 @@ fn main() {
     server::new(move || {
         App::with_state(state.clone())
             .middleware(middleware::Logger::default())
-            .resource("/play_random_song", |r| r.method(http::Method::PUT).f(play_random_song))
-            .resource("/stop_playback", |r| r.method(http::Method::PUT).f(stop_playback))
+            .resource("/play", |r| r.method(http::Method::PUT).f(play_random_song))
+            .resource("/stop", |r| r.method(http::Method::PUT).f(stop_playback))
+            .resource("/", |r| r.f(status))
     })
     .bind("0.0.0.0:8080")
         .unwrap()
