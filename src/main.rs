@@ -51,6 +51,15 @@ fn play_random_song(req: &HttpRequest<AppState>) -> String {
     format!("Playing {}", f.path().unwrap().to_string_lossy())
 }
 
+fn stop_playback(req: &HttpRequest<AppState>) -> String {
+    let sink = &req.state().sink;
+    let device = &req.state().device.lock().unwrap();
+    sink.lock().unwrap().stop();
+    *sink.lock().unwrap() = rodio::Sink::new(&device);
+
+    format!("Stopped playback")
+}
+
 fn main() {
     std::env::set_var("RUST_LOG", "actix_web=info");
     pretty_env_logger::init();
@@ -68,6 +77,7 @@ fn main() {
         App::with_state(state.clone())
             .middleware(middleware::Logger::default())
             .resource("/play_random_song", |r| r.method(http::Method::PUT).f(play_random_song))
+            .resource("/stop_playback", |r| r.method(http::Method::PUT).f(stop_playback))
     })
     .bind("0.0.0.0:8080")
         .unwrap()
