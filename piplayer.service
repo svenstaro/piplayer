@@ -1,0 +1,8 @@
+[Unit]
+Description=piplayer
+
+[Service]
+ExecStart=/home/svenstaro/piplayer
+
+[Install]
+WantedBy=default.target
