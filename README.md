@@ -22,6 +22,4 @@ Since music is baked into the binary at build time, you have to put it into a di
 
 ### On Raspberry Pi 3
 
-- `mkdir /tmp/piplayer`
-- `cd /tmp/piplayer`
 - `watchexec ./piplayer`
