@@ -15,4 +15,5 @@ export PKG_CONFIG_ALLOW_CROSS=1
 export CC=/opt/x-tools/x-tools7h/arm-unknown-linux-gnueabihf/bin/arm-unknown-linux-gnueabihf-gcc
 export CC_target=/opt/x-tools/x-tools7h/arm-unknown-linux-gnueabihf/bin/arm-unknown-linux-gnueabihf-gcc
 cargo build --release --target armv7-unknown-linux-gnueabihf
+ssh mouse "rm /tmp/piplayer/piplayer"
 scp target/armv7-unknown-linux-gnueabihf/release/piplayer mouse:/tmp/piplayer/piplayer

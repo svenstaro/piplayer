@@ -11,9 +11,10 @@ Receive a command, play a song
     [target.armv7-unknown-linux-gnueabihf]
     linker = "/opt/x-tools/x-tools7h/arm-unknown-linux-gnueabihf/bin/arm-unknown-linux-gnueabihf-gcc"
 
-- cargo watch -s './crosscompile.sh'
+- `cargo watch -s './crosscompile.sh'`
 
 ### On Raspberry Pi 3
 
-- cd /tmp/piplayer
-- watchexec ./piplayer
+- `mkdir /tmp/piplayer`
+- `cd /tmp/piplayer`
+- `watchexec ./piplayer`
