@@ -46,7 +46,6 @@ fn play_random_song(req: &HttpRequest<AppState>) -> String {
     sink.lock().unwrap().stop();
     *sink.lock().unwrap() = rodio::Sink::new(&device);
     sink.lock().unwrap().append(rodio::Decoder::new(reader).unwrap());
-    // sink.lock().unwrap().play();
 
     format!("Playing {}", f.path().unwrap().to_string_lossy())
 }
