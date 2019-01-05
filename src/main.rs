@@ -1,4 +1,4 @@
-use actix_web::{middleware, server, App, HttpRequest};
+use actix_web::{middleware, server, App, HttpRequest, http};
 use rand::{Rng, thread_rng};
 use std::io::{Read, Cursor};
 use std::sync::Arc;
@@ -67,7 +67,7 @@ fn main() {
     server::new(move || {
         App::with_state(state.clone())
             .middleware(middleware::Logger::default())
-            .resource("/play_random_song", |r| r.f(play_random_song))
+            .resource("/play_random_song", |r| r.method(http::Method::PUT).f(play_random_song))
     })
     .bind("0.0.0.0:8080")
         .unwrap()
