@@ -15,8 +15,8 @@ Since music is baked into the binary at build time, you have to put it into a di
 - Install `x-tools-armv7-bin`
 - Add to `~/.cargo/config`:
 
-    [target.armv7-unknown-linux-gnueabihf]
-    linker = "/opt/x-tools/x-tools7h/arm-unknown-linux-gnueabihf/bin/arm-unknown-linux-gnueabihf-gcc"
+      [target.armv7-unknown-linux-gnueabihf]
+      linker = "/opt/x-tools/x-tools7h/arm-unknown-linux-gnueabihf/bin/arm-unknown-linux-gnueabihf-gcc"
 
 - `cargo watch -s './crosscompile.sh'`
 
