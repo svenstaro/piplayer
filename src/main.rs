@@ -23,15 +23,14 @@ fn play_random_song(req: &HttpRequest<AppState>) -> String {
         .count();
 
     let mut archive = Archive::new(AUDIO_FILES);
-    let songs = archive
+    let mut songs = archive
         .entries()
         .expect("tar read error");
 
     let rnd_index = rng.gen_range(0, songs_count);
 
     let song = songs
-        .skip(rnd_index)
-        .next()
+        .nth(rnd_index)
         .expect("Empty tar");
 
     let mut buffer = Vec::new();
@@ -56,7 +55,7 @@ fn stop_playback(req: &HttpRequest<AppState>) -> String {
     sink.lock().unwrap().stop();
     *sink.lock().unwrap() = rodio::Sink::new(&device);
 
-    format!("Stopped playback")
+    "Stopped playback".to_string()
 }
 
 fn main() {
