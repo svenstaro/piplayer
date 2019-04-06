@@ -3,8 +3,9 @@ Receive a command, play a song
 
 ## How to use
 
-`PUT` to `/play_random_song` to play a random song.
-`PUT` to `/stop_playback` to stop the current playback.
+`PUT` to `/play` to play a random song.
+`PUT` to `/stop` to stop the current playback.
+`GET` to `/` to receive the current playback status.
 
 ## How to build
 
