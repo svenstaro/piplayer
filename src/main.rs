@@ -87,7 +87,7 @@ fn main() {
             .resource("/stop", |r| r.method(http::Method::PUT).f(stop_playback))
             .resource("/", |r| r.f(status))
     })
-    .bind("0.0.0.0:8080")
+    .bind("[::]:8080")
         .unwrap()
         .start();
 
