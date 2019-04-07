@@ -4,8 +4,8 @@ set -eux
 
 SYSROOT=/tmp/alarm
 mkdir -p ${SYSROOT}
-PACKAGE=alsa-lib-1.1.7-2-armv7h.pkg.tar.xz
-wget -q -c -P ${SYSROOT} http://mirror.archlinuxarm.org/armv7h/extra/${PACKAGE}
+PACKAGE=alsa-lib-1.1.8-1-armv7h.pkg.tar.xz
+wget -c -P ${SYSROOT} http://mirror.archlinuxarm.org/armv7h/extra/${PACKAGE}
 tar xf ${SYSROOT}/${PACKAGE} -C ${SYSROOT} 2>/dev/null
 
 export PKG_CONFIG_DIR=
