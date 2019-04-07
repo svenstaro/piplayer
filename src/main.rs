@@ -1,6 +1,6 @@
-use actix_web::{middleware, server, App, HttpRequest, http};
-use rand::{Rng, thread_rng};
-use std::io::{Read, Cursor};
+use actix_web::{http, middleware, server, App, HttpRequest};
+use rand::{thread_rng, Rng};
+use std::io::{Cursor, Read};
 use std::sync::Arc;
 use std::sync::Mutex;
 use tar::Archive;
@@ -17,21 +17,14 @@ fn play_random_song(req: &HttpRequest<AppState>) -> String {
     let mut rng = thread_rng();
 
     let mut archive_for_count = Archive::new(AUDIO_FILES);
-    let songs_count = archive_for_count
-        .entries()
-        .expect("tar read error")
-        .count();
+    let songs_count = archive_for_count.entries().expect("tar read error").count();
 
     let mut archive = Archive::new(AUDIO_FILES);
-    let mut songs = archive
-        .entries()
-        .expect("tar read error");
+    let mut songs = archive.entries().expect("tar read error");
 
     let rnd_index = rng.gen_range(0, songs_count);
 
-    let song = songs
-        .nth(rnd_index)
-        .expect("Empty tar");
+    let song = songs.nth(rnd_index).expect("Empty tar");
 
     let mut buffer = Vec::new();
     let mut f = song.unwrap();
@@ -44,7 +37,9 @@ fn play_random_song(req: &HttpRequest<AppState>) -> String {
     let device = &req.state().device.lock().unwrap();
     sink.lock().unwrap().stop();
     *sink.lock().unwrap() = rodio::Sink::new(&device);
-    sink.lock().unwrap().append(rodio::Decoder::new(reader).unwrap());
+    sink.lock()
+        .unwrap()
+        .append(rodio::Decoder::new(reader).unwrap());
 
     format!("Playing {}", f.path().unwrap().to_string_lossy())
 }
@@ -73,10 +68,7 @@ fn main() {
 
     let device = Arc::new(Mutex::new(rodio::default_output_device().unwrap()));
     let sink = Arc::new(Mutex::new(rodio::Sink::new(&device.lock().unwrap())));
-    let state = AppState {
-        device,
-        sink,
-    };
+    let state = AppState { device, sink };
 
     let sys = actix::System::new("piplayer");
 
@@ -88,8 +80,8 @@ fn main() {
             .resource("/", |r| r.f(status))
     })
     .bind("[::]:8080")
-        .unwrap()
-        .start();
+    .unwrap()
+    .start();
 
     println!("Started http server: 0.0.0.0:8080");
     let _ = sys.run();
