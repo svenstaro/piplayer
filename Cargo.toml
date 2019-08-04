@@ -1,13 +1,12 @@
 [package]
 name = "piplayer"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Sven-Hendrik Haase <svenstaro@gmail.com>"]
 edition = "2018"
 
 [dependencies]
 pretty_env_logger = "0.3"
-actix = "0.7"
-actix-web = "0.7"
+actix-web = "1.0"
 tar = "0.4"
 rodio = { version = "0.8", features = ["vorbis"], default-features = false }
 rand = "0.6"

@@ -1,4 +1,4 @@
-use actix_web::{http, middleware, server, App, HttpRequest};
+use actix_web::{get, middleware, put, web, App, HttpServer};
 use rand::{thread_rng, Rng};
 use std::io::{Cursor, Read};
 use std::sync::Arc;
@@ -13,7 +13,8 @@ struct AppState {
     sink: Arc<Mutex<rodio::Sink>>,
 }
 
-fn play_random_song(req: &HttpRequest<AppState>) -> String {
+#[put("/play")]
+fn play_random_song(appstate: web::Data<AppState>) -> String {
     let mut rng = thread_rng();
 
     let mut archive_for_count = Archive::new(AUDIO_FILES);
@@ -33,8 +34,8 @@ fn play_random_song(req: &HttpRequest<AppState>) -> String {
     f.read_to_end(&mut buffer).unwrap();
     let reader = Cursor::new(buffer);
 
-    let sink = &req.state().sink;
-    let device = &req.state().device.lock().unwrap();
+    let sink = &appstate.sink;
+    let device = appstate.device.lock().unwrap();
     sink.lock().unwrap().stop();
     *sink.lock().unwrap() = rodio::Sink::new(&device);
     sink.lock()
@@ -44,17 +45,19 @@ fn play_random_song(req: &HttpRequest<AppState>) -> String {
     format!("Playing {}", f.path().unwrap().to_string_lossy())
 }
 
-fn stop_playback(req: &HttpRequest<AppState>) -> String {
-    let sink = &req.state().sink;
-    let device = &req.state().device.lock().unwrap();
+#[put("/stop")]
+fn stop_playback(appstate: web::Data<AppState>) -> String {
+    let sink = &appstate.sink;
+    let device = appstate.device.lock().unwrap();
     sink.lock().unwrap().stop();
     *sink.lock().unwrap() = rodio::Sink::new(&device);
 
     "Stopped playback".to_string()
 }
 
-fn status(req: &HttpRequest<AppState>) -> String {
-    let sink = &req.state().sink;
+#[get("/")]
+fn status(appstate: web::Data<AppState>) -> String {
+    let sink = &appstate.sink;
     if sink.lock().unwrap().empty() {
         "paused".to_string()
     } else {
@@ -62,7 +65,7 @@ fn status(req: &HttpRequest<AppState>) -> String {
     }
 }
 
-fn main() {
+fn main() -> Result<(), std::io::Error> {
     std::env::set_var("RUST_LOG", "actix_web=info");
     pretty_env_logger::init();
 
@@ -70,19 +73,16 @@ fn main() {
     let sink = Arc::new(Mutex::new(rodio::Sink::new(&device.lock().unwrap())));
     let state = AppState { device, sink };
 
-    let sys = actix::System::new("piplayer");
-
-    server::new(move || {
-        App::with_state(state.clone())
-            .middleware(middleware::Logger::default())
-            .resource("/play", |r| r.method(http::Method::PUT).f(play_random_song))
-            .resource("/stop", |r| r.method(http::Method::PUT).f(stop_playback))
-            .resource("/", |r| r.f(status))
+    let server = HttpServer::new(move || {
+        App::new()
+            .data(state.clone())
+            .wrap(middleware::Logger::default())
+            .service(play_random_song)
+            .service(stop_playback)
+            .service(status)
     })
-    .bind("[::]:8080")
-    .unwrap()
-    .start();
+    .bind("[::]:8080")?;
 
     println!("Started http server: 0.0.0.0:8080");
-    let _ = sys.run();
+    server.run()
 }
