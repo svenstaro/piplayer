@@ -8,8 +8,8 @@ edition = "2018"
 pretty_env_logger = "0.3"
 actix-web = "1.0"
 tar = "0.4"
-rodio = { version = "0.8", features = ["vorbis"], default-features = false }
-rand = "0.6"
+rodio = { version = "0.9", features = ["vorbis"], default-features = false }
+rand = "0.7"
 
 [build-dependencies]
 tar = "0.4"
