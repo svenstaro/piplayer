@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir music
+mkdir -p music
 cd music
 youtube-dl -x https://www.youtube.com/watch?v=JaflMqvxIqA
 youtube-dl -x https://www.youtube.com/watch?v=dcSPK5yn9K8
