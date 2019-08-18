@@ -55,6 +55,18 @@ fn stop_playback(appstate: web::Data<AppState>) -> String {
     "Stopped playback".to_string()
 }
 
+#[get("/list")]
+fn list(appstate: web::Data<AppState>) -> String {
+    let mut archive = Archive::new(AUDIO_FILES);
+    let mut songs = archive.entries().expect("tar read error");
+    let mut song_list = String::new();
+    for song in songs {
+        song_list.push_str(&song.unwrap().path().unwrap().to_string_lossy());
+        song_list.push_str("\n");
+    }
+    format!("Total songs: {}\n{}", song_list.lines().count(), song_list)
+}
+
 #[get("/")]
 fn status(appstate: web::Data<AppState>) -> String {
     let sink = &appstate.sink;
@@ -80,6 +92,7 @@ fn main() -> Result<(), std::io::Error> {
             .service(play_random_song)
             .service(stop_playback)
             .service(status)
+            .service(list)
     })
     .bind("[::]:8080")?;
 
