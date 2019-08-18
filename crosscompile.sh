@@ -4,7 +4,8 @@ set -eux
 
 SYSROOT=/tmp/alarm
 mkdir -p ${SYSROOT}
-PACKAGE=alsa-lib-1.1.9-1-armv7h.pkg.tar.xz
+PACKAGE=$(curl http://hu.mirror.archlinuxarm.org/armv7h/extra/ | grep -Po -m1 '>\K(alsa-lib.*?)(?=<)')
+echo ${PACKAGE}
 wget -c -P ${SYSROOT} http://mirror.archlinuxarm.org/armv7h/extra/${PACKAGE}
 tar xf ${SYSROOT}/${PACKAGE} -C ${SYSROOT} 2>/dev/null
 
@@ -17,3 +18,4 @@ export CC_target=/opt/x-tools/x-tools7h/arm-unknown-linux-gnueabihf/bin/arm-unkn
 cargo build --release --target armv7-unknown-linux-gnueabihf
 ssh mouse "rm ~/piplayer"
 scp target/armv7-unknown-linux-gnueabihf/release/piplayer mouse:piplayer
+ssh mouse "systemctl --user restart piplayer"
