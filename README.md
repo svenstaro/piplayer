@@ -21,6 +21,6 @@ Since music is baked into the binary at build time, you have to put it into a di
 
 - `cargo watch -s './crosscompile.sh'`
 
-### On Raspberry Pi 3
+### On device
 
 - `watchexec ./piplayer`

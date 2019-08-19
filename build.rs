@@ -54,12 +54,4 @@ fn main() {
             }
         }
     }
-
-    // let mut f = File::create(&dest_path).unwrap();
-    //
-    // f.write_all(b"
-    //     pub fn message() -> &'static str {
-    //         \"Hello, World!\"
-    //     }
-    // ").unwrap();
 }
