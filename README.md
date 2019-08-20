@@ -1,4 +1,4 @@
-# piplayer
+# piplayer ![GitHub Actions Workflow](https://github.com/svenstaro/piplayer/workflows/Rust/badge.svg)
 Receive a command, play a song
 
 ## How to use
