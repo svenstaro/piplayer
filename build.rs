@@ -16,7 +16,7 @@ fn main() {
     let output_tar_file = File::create(output_tar_path).expect("Couldn't create output tar file");
     let mut output_archive = Builder::new(output_tar_file);
 
-    for entry in fs::read_dir(music_dir).unwrap() {
+    for entry in fs::read_dir(music_dir).expect("Couldn't open music dir") {
         let good_entry = entry.expect("Something weird happened");
         if good_entry
             .file_type()
