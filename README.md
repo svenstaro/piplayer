@@ -1,4 +1,4 @@
-# piplayer ![GitHub Actions Workflow](https://github.com/svenstaro/piplayer/workflows/Build/badge.svg)
+# piplayer [![GitHub Actions Workflow](https://github.com/svenstaro/piplayer/workflows/Build/badge.svg)](https://github.com/svenstaro/piplayer/actions)
 Receive a command, play a song
 
 ## How to use
