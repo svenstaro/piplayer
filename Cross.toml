@@ -1,0 +1,11 @@
+[target.armv7-unknown-linux-gnueabihf]
+image = "cross:armv7-unknown-linux-gnueabihf-custom"
+
+# [build.env]
+# passthrough = [
+#     "PKG_CONFIG_ALLOW_CROSS",
+#     "PKG_CONFIG_DIR",
+#     "PKG_CONFIG_LIBDIR",
+#     "PKG_CONFIG_SYSROOT_DIR",
+#     "PKG_CONFIG_ALLOW_CROSS",
+# ]
