@@ -49,8 +49,11 @@ fn main() {
                 println!("{:?}", ffmpeg_command);
                 ffmpeg_command.expect("ffmpeg failed somehow");
 
-                let mut f = File::open(output_final_path).expect("Couldn't open output file for reading");
-                output_archive.append_file(output_file_name, &mut f).unwrap();
+                let mut f =
+                    File::open(output_final_path).expect("Couldn't open output file for reading");
+                output_archive
+                    .append_file(output_file_name, &mut f)
+                    .unwrap();
             }
         }
     }
