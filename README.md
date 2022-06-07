@@ -12,16 +12,4 @@ Receive a command, play a song
 
 Since music is baked into the binary at build time, you have to put it into a dir `music/` in the root of this repo.
 
-### On host
-
-- Install `x-tools-armv7-bin`
-- Add to `~/.cargo/config`:
-
-      [target.armv7-unknown-linux-gnueabihf]
-      linker = "/opt/x-tools/x-tools7h/arm-unknown-linux-gnueabihf/bin/arm-unknown-linux-gnueabihf-gcc"
-
-- `cargo watch -s './crosscompile.sh'`
-
-### On device
-
-- `watchexec ./piplayer`
+Run `just build-native` or `just build-cross`.

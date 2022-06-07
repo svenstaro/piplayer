@@ -6,10 +6,10 @@ edition = "2018"
 
 [dependencies]
 pretty_env_logger = "0.4"
-actix-web = "3"
+actix-web = "4"
 tokio = "1"
 tar = "0.4"
-rodio = { version = "0.13", features = ["vorbis"], default-features = false }
+rodio = { version = "0.15", features = ["vorbis"], default-features = false }
 rand = "0.8"
 lazy_static = "1"
 
