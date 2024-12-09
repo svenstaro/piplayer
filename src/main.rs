@@ -1,4 +1,5 @@
 use actix_web::{get, middleware, put, web, App, HttpServer};
+use log::info;
 use rand::{thread_rng, Rng};
 use rodio::Sink;
 use std::time::Duration;
@@ -36,7 +37,7 @@ async fn play_random_song(audio_state: web::Data<Mutex<AudioState>>) -> String {
     let song = songs.nth(rnd_index).expect("Empty tar");
     let f = song.unwrap();
 
-    println!("Playing {}", f.path().unwrap().to_string_lossy());
+    info!("Playing {}", f.path().unwrap().to_string_lossy());
     audio_state
         .lock()
         .unwrap()
@@ -84,7 +85,7 @@ async fn status(audio_state: web::Data<Mutex<AudioState>>) -> String {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    std::env::set_var("RUST_LOG", "actix_web=info");
+    std::env::set_var("RUST_LOG", "info");
     pretty_env_logger::init();
 
     let audio_state: web::Data<Mutex<AudioState>> = web::Data::new(Mutex::new(Default::default()));
@@ -134,6 +135,6 @@ async fn main() -> std::io::Result<()> {
     })
     .bind("[::]:8080")?;
 
-    println!("Started http server: 0.0.0.0:8080");
+    info!("Started http server: 0.0.0.0:8080");
     server.run().await
 }

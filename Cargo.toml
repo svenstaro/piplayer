@@ -9,6 +9,7 @@ pretty_env_logger = "0.5"
 actix-web = "4"
 tokio = "1"
 tar = "0.4"
+log = "0.4"
 rodio = { version = "0.20", features = ["vorbis"], default-features = false }
 rand = "0.8"
 lazy_static = "1"
@@ -18,3 +19,4 @@ tar = "0.4"
 
 [profile.release]
 lto = true
+panic = 'abort'
