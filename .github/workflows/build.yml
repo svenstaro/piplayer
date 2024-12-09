@@ -9,8 +9,8 @@ jobs:
     - uses: actions/checkout@v4
     - name: Install alsa
       run: sudo apt-get -y install libasound2-dev
-    - name: Create dummy music dir
-      run: mkdir music
+    - name: Create dummy music tar
+      run: touch music.tar
     - name: Build
       run: cargo build
     - name: Run tests
