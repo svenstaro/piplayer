@@ -6,4 +6,6 @@
 **/*.rs.bk
 
 # Big binary dir with music
-/music/
+/converted_music/
+/input_music/
+music.tar

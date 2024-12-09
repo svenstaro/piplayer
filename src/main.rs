@@ -8,7 +8,7 @@ use std::{
 };
 use tar::Archive;
 
-const AUDIO_FILES: &[u8] = include_bytes!(concat!(env!("OUT_DIR"), "/music.tar"));
+const AUDIO_FILES: &[u8] = include_bytes!(concat!(env!("CARGO_MANIFEST_DIR"), "/music.tar"));
 
 #[derive(Debug)]
 enum AudioCommand {
